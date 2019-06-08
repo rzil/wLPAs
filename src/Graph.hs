@@ -1,15 +1,13 @@
 module Graph where
 
-import qualified Data.Map as M
 import Data.List (nub,(\\),delete,intercalate,permutations,nubBy,sort,sortBy,groupBy,findIndex)
 import Matrix
 import Data.Ratio
 import Polynomial hiding (isZero)
---import System.Random
---import System.Process (callCommand)
 import Data.Function (on)
 import Data.Bifunctor
 import Data.Maybe
+import qualified Data.Map as M
 import qualified Data.Set as S
 
 -------------------------------------------------------------------------
@@ -305,22 +303,3 @@ visit g (visited,l) u
 assign g root assigned u
   | M.member u assigned = assigned
   | otherwise = foldl (assign g root) (M.insert u root assigned) (inNeighbours g u)
-
---randomGraph :: Int -> Int -> Float -> Graph String Int
---randomGraph seed n p = Graph (S.fromList [1..n]) (M.fromList $ zip ["e"++show k | k <- [1..]] [v | (k,v) <- zip (randomRs (0.0,1.0) (mkStdGen seed)) [(x,y) | x <- [1..n], y <- [1..n], x /= y], k < p])
-
---randomHamiltonianGraph :: Int -> Int -> Float -> Graph String Int
---randomHamiltonianGraph seed n p = graphUnion (cycleGraph n) (randomGraph seed n p)
-
--- creates a GraphViz .dot file string for the graph
-dotString :: (Show a, Show e, Ord a, Ord e) => Graph e a -> String
-dotString graph = "digraph {\n" ++ unlines ([let (u,v) = ((edges graph) M.! e) in " " ++ (show.show) u ++ " -> " ++ (show.show) v ++ " [ label=" ++ (show.(" " ++).(++ " ").show) e ++ " ]" | e <- M.keys (edges graph)] ++ [" " ++ (show.show) u | (u,[]) <- M.assocs (vertexForm graph)]) ++ "}\n"
-
---visualiseGraph :: (Show a, Show e, Ord a, Ord e) => Graph e a -> IO ()
---visualiseGraph graph = writeFile "test.dot" (dotString graph) >> callCommand "dot test.dot -Tpng > test.png; open test.png"
-
-weightedDotString :: (Show a, Show e, Ord e, Ord a) => WeightedGraph e a -> String
-weightedDotString (WeightedGraph graph weighting) = "digraph {\n" ++ unlines ([let (u,v) = ((edges graph) M.! e) in " " ++ (show.show) u ++ " -> " ++ (show.show) v ++ " [ label=" ++ (show.(" " ++).(++ " ").show) (e,(weighting M.! e)) ++ " ]" | e <- M.keys (edges graph)] ++ [" " ++ (show.show) u | (u,[]) <- M.assocs (vertexForm graph)]) ++ "}\n"
-
---visualiseWeightedGraph :: (Ord a, Ord e, Show e, Show a) => WeightedGraph e a -> IO ()
---visualiseWeightedGraph weightedGraph = writeFile "test.dot" (weightedDotString weightedGraph) >> callCommand "dot test.dot -Tpng > test.png; open test.png"
