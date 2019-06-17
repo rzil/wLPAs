@@ -89,11 +89,11 @@ showTest' = do
    putStrLn (show $ and checks)
  where
   checks = map (matrix 9 9 (const []) ==) check'
-  rels = WLPA.wLPA_relations_show weighted_graph_G
+  rels = WLPA.wLPA_relations_show weighted_graph_G'
 
 showTest = do
    putStr $ unlines $ map show (zip checks rels)
    putStrLn (show $ and checks)
  where
   checks = map (matrix 3 3 (const []) ==) check
-  rels = WLPA.wLPA_relations_show weighted_graph_G
+  rels = WLPA.wLPA_relations_show weighted_graph_G'
