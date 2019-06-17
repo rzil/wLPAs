@@ -5,6 +5,7 @@ import qualified Example9 as JE
 import qualified Example11 as EG
 import qualified Example15 as FGx (showTest)
 import qualified Example18 as GnE (showTest)
+import qualified Example20 as G3G (showTest)
 import qualified Example21 as HG (showTest)
 
 runTest name test = do
@@ -42,6 +43,9 @@ main = do
     
     printSubheading "Example 5.2.5 from my thesis"
     runTest "L_K(E,w_E) --> L_{K[x,x^{-1}]}(G,w_G)" FGx.showTest
+    
+    printSubheading "Example 5.2.6 from my thesis"
+    runTest "L_K(G_n,w_{G_n}) --> M_{L_K(G,w_G)}(2n^2 - n) for n = 3" (G3G.showTest)
     
     printSubheading "Example 5.2.7 from my thesis"
     runTest "L_K(H,w_H) --> M_{L_K(G,w_G)}(3)" HG.showTest
